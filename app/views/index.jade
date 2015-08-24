@@ -1,0 +1,541 @@
+extends ./layout.jade
+
+block styles
+	link(rel="stylesheet" href="/css/animations.css")
+	link(rel="stylesheet" href="/css/flaticon.css")
+	link(rel="stylesheet" href="/css/owl.carousel.css")
+	link(rel="stylesheet" href="/css/owl.theme.css")
+	link(rel="stylesheet" href="/css/style.min.css")
+	link(rel="stylesheet" href="/colors/blue.css" id="colors")
+	link(rel="stylesheet" href="/styleswitcher/styleswitcher.css")
+
+block content
+
+	//- Facebook Source
+	//- ==================================================
+	#fb-root
+	script.
+		(function (d, s, id) 
+		{
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) return;
+			js = d.createElement(s); js.id = id;
+			js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+
+	//- Loader
+	//- ==================================================
+	#page-loader
+
+	//- Header
+	//- ==================================================
+	header#nav-content.vertical-nav(class="nav-white")
+
+		//- Logo
+		.my-logo
+			a(href="#profile")
+				img(src="img/my-photo.jpg", alt="")
+		
+		//- Navigation
+		ul.menu(class=["nav","me-nav"])
+			li.menu-item(class="active")
+				a(href="#profile")
+					span: |Profile
+					i.fa(class="fa-user")
+			li.menu-item
+				a(href="#resume")
+					span: |Resume
+					i.fa(class="fa-pencil")
+			li.menu-item
+				a(href="#portfolio")
+					span: |Portfolio
+					i.fa(class="fa-desktop")
+			li.menu-item
+				a(href="#blog")
+					span: |Latest Posts
+					i.fa(class="fa-comment")
+			li.menu-item
+				a(href="#contact")
+					span: |Contact
+					i.fa(class="fa-phone")
+		
+		//- Copyright
+		span.copyright(class="hidden-md")
+			|© 2015&nbsp;
+			b: |Don Payne
+			|.
+
+	//- Page Content
+	//- ==================================================
+	#page-content
+
+		//- Profile
+		section#profile.black
+		
+			//- Background photo
+			#profile-bg.editable-alpha(data-alpha="40"): img(src="img/backgrounds/background-image.jpg", alt="")
+
+			//- Video Background Player
+			#profile-bg-player.player(data-property="{videoURL:'https://www.youtube.com/watch?v=6D-A6CL3Pv8',containment:'#profile',startAt:16,stopAt:200,mute:true,autoPlay:true,loop:true,showControls:false,opacity:0.35}")
+		
+			.content(class=["padded","dark"])
+			
+				//- Top Bar
+				.top-bar
+				
+					//- Social media
+					.pull-left
+						span.hiddend-sm(class="hidden-xs"): |Check my social media!&nbsp;&nbsp;&nbsp;&nbsp;
+						ul.social-icons(class="si-pull-up")
+							li: a(href="#"): i.fa(class="fa-facebook")
+							li: a(href="#"): i.fa(class="fa-twitter")
+							li: a(href="#"): i.fa(class="fa-google-plus")
+					
+					//- URL
+					.pull-right
+						a(href="https://github.com/donpayne",class="hidden-xs"): |github.com/donpayne
+			
+				//- Profile Content
+				.profile-content
+					h1.short: |Don Payne
+					h5
+						|I am a&nbsp;
+						span.text-primary: |professional
+						|&nbsp;web application developer.
+					a.btn(href="https://github.com/donpayne/cv", class="btn-primary", target="_blank"): |Download my CV
+					a.btn(href="#contact", class="btn-default"): |Contact me
+				
+				//- Bottom Bar
+				.bottom-bar(class=["profile-bottom-bar","hidden-xs"])
+				
+					//- Contact List
+					ul.list-inline
+						li
+							i.inline-icon(class=["icon-before-and-after","text-primary","fa","fa-map-marker"])
+							|Located in Riverton, UT 84096, USA
+						li
+							i.inline-icon(class=["icon-before-and-after","text-primary","fa","fa-comment"])
+							a(href="#"): |don.carlynn@gmail.com
+						li
+							i.inline-icon(class=["icon-before-and-after","text-primary","fa","fa-phone"])
+							|801.231.1678
+		
+		//- Resume
+		section#resume
+		
+			.content(class=["dimmed-effect","padded-short"])
+				.row
+					.col-lg-4
+
+						//- Box - About Me
+						.resume-box(class=["animated","slide-in-top"])
+							h3: |Who am I?
+							each item, i in resume.character
+								p(class="#{(i == 0)? 'lead' : ''}")
+									= item.text
+							a.btn(href="#portfolio", class="btn-black"): |See my portfolio
+							a.btn(href="#contact", class="btn-default"): |Contact me
+						
+						//- Box - Skills & Attributes
+						.resume-box(class=["animated","slide-in-left","appear-second"])
+							h3: |Skills &amp; Attributes
+							each skill in resume.skills
+								.skill
+									span.skill-name= skill.title + ' (' + skill.description + ')'
+									.skill-bar(class="sb-green")
+										-var n = 0;
+										while (n < 4)
+											if (n < skill.rate)
+												.skill-rate-on
+											else
+												.skill-rate-off
+											-n += 1;
+					
+					.col-md-6(class="col-lg-4")
+					
+						//- Box - Specialities
+						.resume-box(class=["animated","slide-in-right"])
+							h3: |My Specialties
+							each spec in resume.specialties
+								.speciality
+									i.speciality-icon(class=["text-red", spec.icon])
+									.speciality-content
+										h5.short= spec.title
+										p.speciaity-description= spec.description
+						
+						//- Box - Education & Training
+						.resume-box(class=["animated","slide-in-left"])
+							h3: |Education &amp; Training
+							.timeline
+								each edu in resume.education
+									.timeline-event(class="te-yellow")
+										.event-date= edu.period
+										.event-name= edu.title
+										.event-description= edu.description
+					
+					.col-md-6(class="col-lg-4")
+					
+						//- Box - Languages
+						.resume-box(class=["animated","slide-in-right","appear-second"])
+							h3: |Software Languages
+							each lang in resume.languages
+								.skill
+									span.skill-name= lang.title
+									.skill-bar(class="sb-orange")
+										-var n = 0;
+										while (n < 4)
+											if (n < lang.rate)
+												.skill-rate-on
+											else
+												.skill-rate-off
+											-n += 1;
+						
+						//- Box - Interests
+						.resume-box(class=["animated","slide-in-bottom"])
+							h3: |Hobbies &amp; Interests
+							ul.list-group
+							each inter in resume.interests
+								li.list-group-item= inter.title
+		
+		//- Portfolio
+		section#portfolio
+		
+			//- Projects Holder
+			.projects-holder(class="black","dark","clearfix")
+
+				//- Single Project 
+				.single-project(class=["animated","fade-in"])
+					.project-image: img(src="img/portfolio/project_01.jpg", alt="")
+					.project-mask
+						.project-info
+							.project-title: |Swimming Pool
+							.project-caption(class="text-blue"): |Webdesgin
+							.project-buttons
+								a.btn(href="#", class=["ajax-portfolio-link","btn-blue","btn-sm"]): |View it
+								a.btn(href="#", target="_blank", class=["btn-default","btn-sm"]): |Online version
+				//- Single Project 
+				.single-project(class=["animated","fade-in","appear-third"])
+					.project-image: img(src="img/portfolio/project_02.jpg", alt="")
+					.project-mask
+						.project-info
+							.project-title: |Shopping Mall
+							.project-caption(class="text-yellow"): |Webdesgin / Webdevelopment
+							.project-buttons
+								a.btn(href="#", class=["ajax-portfolio-link","btn-yellow","btn-sm"]): |View it
+								a.btn(href="#", target="_blank", class=["btn-default","btn-sm"]): |Online version
+				//- Single Project 
+				.single-project(class=["animated","fade-in","appear-second"])
+					.project-image: img(src="img/portfolio/project_03.jpg", alt="")
+					.project-mask
+						.project-info
+							.project-title: |Animal Charity
+							.project-caption(class="text-green"): |Corporate Identity
+							.project-buttons
+								a.btn(href="#", class=["ajax-portfolio-link","btn-green","btn-sm"]): |View it
+								a.btn(href="#", target="_blank", class=["btn-default","btn-sm"]): |Online version
+				//- Single Project 
+				.single-project(class=["animated","fade-in","appear-fourth"])
+					.project-image: img(src="img/portfolio/project_04.jpg", alt="")
+					.project-mask
+						.project-info
+							.project-title: |Be Pregnant
+							.project-caption(class="text-red"): |Webdesgin / Corporate Identity
+							.project-buttons
+								a.btn(href="#", class=["ajax-portfolio-link","btn-red","btn-sm"]): |View it
+								a.btn(href="#", target="_blank", class=["btn-default","btn-sm"]): |Online version
+				//- Single Project 
+				.single-project(class=["animated","fade-in"])
+					.project-image: img(src="img/portfolio/project_05.jpg", alt="")
+					.project-mask
+						.project-info
+							.project-title: |Booking Store
+							.project-caption(class="text-green"): |Webdesgin / Webdevelopment
+							.project-buttons
+								a.btn(href="#", class=["ajax-portfolio-link","btn-green","btn-sm"]): |View it
+								a.btn(href="#", target="_blank", class=["btn-default","btn-sm"]): |Online version
+				//- Single Project 
+				.single-project(class=["animated","fade-in","appear-second"])
+					.project-image: img(src="img/portfolio/project_06.jpg", alt="")
+					.project-mask
+						.project-info
+							.project-title: |Social Media App
+							.project-caption(class="text-orange"): |App Design
+							.project-buttons
+								a.btn(href="#", class=["ajax-portfolio-link","btn-orange","btn-sm"]): |View it
+								a.btn(href="#", target="_blank", class=["btn-default","btn-sm"]): |Online version
+				//- Single Project 
+				.single-project(class=["animated","fade-in","appear-fourth"])
+					.project-image: img(src="img/portfolio/project_07.jpg", alt="")
+					.project-mask
+						.project-info
+							.project-title: |Medical Business
+							.project-caption(class="text-blue"): |Webdesgin / Corporate Identity
+							.project-buttons
+								a.btn(href="#", class=["ajax-portfolio-link","btn-blue","btn-sm"]): |View it
+								a.btn(href="#", target="_blank", class=["btn-default","btn-sm"]): |Online version
+				//- Single Project 
+				.single-project(class=["animated","fade-in","appear-third"])
+					.project-image: img(src="img/portfolio/project_08.jpg", alt="")
+					.project-mask
+						.project-info
+							.project-title: |Piece of cake!
+							.project-caption(class="text-orange"): |Webdesgin / Webdevelopment
+							.project-buttons
+								a.btn(href="#", class=["ajax-portfolio-link","btn-orange","btn-sm"]): |View it
+								a.btn(href="#", target="_blank", class=["btn-default","btn-sm"]): |Online version
+			
+			//- Ajax Project Details
+			.project-content
+		
+		//- Blog
+		section#blog
+			.content(class="padded")
+				.row
+					.col-lg-12
+						
+						//- Post Carousel
+						.post-carousel(class=["animated","slide-in-top"])
+							//- Single Post
+							article.post(class="post-carousel-item")
+								.post-image: img(src="img/blog/post_01.jpg", alt="")
+								.post-content-holder
+									.post-content
+										.post-info(class="clearfix")
+											span.post-date: |22 May, 2014
+											.post-meta
+												span
+													i.fa(class="fa-comment")
+													a(href="#"): |4 comments
+												span
+													i.fa(class="fa-tag")
+													a(href="#"): |Webdesign
+										.post-text
+											h3: a(href="#"): |Awesome Seattle Cycle Trip
+											p.lead: |Per sint eirmod expetenda te. Pro ne essent.
+											p: |Per ea tibique fabellas electram. Ea aliquam corpora vis. Ne quot civibus atomorum quo.
+											a.btn(href="#", class=["btn-primary","btn-sm"]): |Read more
+							//- Single Post
+							article.post(class="post-carousel-item")
+								.post-image: img(src="img/blog/post_02.jpg", alt="")
+								.post-content-holder
+									.post-content
+										.post-info(class="clearfix")
+											span.post-date: |22 May, 2014
+											.post-meta
+												span
+													i.fa(class="fa-comment")
+													a(href="#"): |4 comments
+												span
+													i.fa(class="fa-tag")
+													a(href="#"): |Webdesign
+										.post-text
+											h3: a(href="#"): |Brand New PC
+											p.lead: |Per sint eirmod expetenda te. Pro ne essent.
+											p: |Per ea tibique fabellas electram. Ea aliquam corpora vis. Ne quot civibus atomorum quo.
+											a.btn(href="#", class=["btn-primary","btn-sm"]): |Read more
+							//- Single Post
+							article.post(class="post-carousel-item")
+								.post-image: img(src="img/blog/post_03.jpg", alt="")
+								.post-content-holder
+									.post-content
+										.post-info(class="clearfix")
+											span.post-date: |22 May, 2014
+											.post-meta
+												span
+													i.fa(class="fa-comment")
+													a(href="#"): |4 comments
+												span
+													i.fa(class="fa-tag")
+													a(href="#"): |Webdesign
+										.post-text
+											h3: a(href="#"): |To be or not to be?
+											p.lead: |Per sint eirmod expetenda te. Pro ne essent.
+											p: |Per ea tibique fabellas electram. Ea aliquam corpora vis. Ne quot civibus atomorum quo.
+											a.btn(href="#", class=["btn-primary","btn-sm"]): |Read more
+							//- Single Post
+							article.post(class="post-carousel-item")
+								.post-image: img(src="img/blog/post_04.jpg", alt="")
+								.post-content-holder
+									.post-content
+										.post-info(class="clearfix")
+											span.post-date: |22 May, 2014
+											.post-meta
+												span
+													i.fa(class="fa-comment")
+													a(href="#"): |4 comments
+												span
+													i.fa(class="fa-tag")
+													a(href="#"): |Webdesign
+										.post-text
+											h3: a(href="#"): |New Software for my company
+											p.lead: |Per sint eirmod expetenda te. Pro ne essent.
+											p: |Per ea tibique fabellas electram. Ea aliquam corpora vis. Ne quot civibus atomorum quo.
+											a.btn(href="#", class=["btn-primary","btn-sm"]): |Read more
+							//- Single Post
+							article.post(class="post-carousel-item")
+								.post-image: img(src="img/blog/post_05.jpg", alt="")
+								.post-content-holder
+									.post-content
+										.post-info(class="clearfix")
+											span.post-date: |22 May, 2014
+											.post-meta
+												span
+													i.fa(class="fa-comment")
+													a(href="#"): |4 comments
+												span
+													i.fa(class="fa-tag")
+													a(href="#"): |Webdesign
+										.post-text
+											h3: a(href="#"): |Awesome Seattle Cycle Trip
+											p.lead: |Per sint eirmod expetenda te. Pro ne essent.
+											p: |Per ea tibique fabellas electram. Ea aliquam corpora vis. Ne quot civibus atomorum quo.
+											a.btn(href="#", class=["btn-primary","btn-sm"]): |Read more
+							//- Single Post
+							article.post(class="post-carousel-item")
+								.post-image: img(src="img/blog/post_06.jpg", alt="")
+								.post-content-holder
+									.post-content
+										.post-info(class="clearfix")
+											span.post-date: |22 May, 2014
+											.post-meta
+												span
+													i.fa(class="fa-comment")
+													a(href="#"): |4 comments
+												span
+													i.fa(class="fa-tag")
+													a(href="#"): |Webdesign
+										.post-text
+											h3: a(href="#"): |Brand new PC
+											p.lead: |Per sint eirmod expetenda te. Pro ne essent.
+											p: |Per ea tibique fabellas electram. Ea aliquam corpora vis. Ne quot civibus atomorum quo.
+											a.btn(href="#", class=["btn-primary","btn-sm"]): |Read more
+							//- Single Post
+							article.post(class="post-carousel-item")
+								.post-image: img(src="img/blog/post_07.jpg", alt="")
+								.post-content-holder
+									.post-content
+										.post-info(class="clearfix")
+											span.post-date: |22 May, 2014
+											.post-meta
+												span
+													i.fa(class="fa-comment")
+													a(href="#"): |4 comments
+												span
+													i.fa(class="fa-tag")
+													a(href="#"): |Webdesign
+										.post-text
+											h3: a(href="#"): |To be or not to be?
+											p.lead: |Per sint eirmod expetenda te. Pro ne essent.
+											p: |Per ea tibique fabellas electram. Ea aliquam corpora vis. Ne quot civibus atomorum quo.
+											a.btn(href="#", class=["btn-primary","btn-sm"]): |Read more
+
+						//- End Of Section
+						.end-of-section
+
+							//- Left Caption
+							.pull-left
+								span.hiddend-sm(class="hidden-xs"): |Would you like to check all of my posts? &nbsp; &nbsp;
+								a.btn(href="#", class=["btn-black","btn-sm"]): |Check my Blog Page!
+
+							//- Post Carousel Navigation
+							.post-carousel-control
+								a.post-carousel-prev(href="#"): |Previous
+								a.post-carousel-next(href="#"): |Next
+
+		//- Contact
+		section#contact.black
+		
+			//- Google Map
+			#google-map.animated(class="zoom-out")
+			
+			//- Contact Content
+			.content(class=["contact-content","padded","dark","animated","slide-in-left"])
+				i.title-icon(class=["text-primary","flaticon-speech43"])
+				h2: |Do you want to hire me?
+
+				//- Contact List
+				ul.list-unstyled(class="list-unstyled-icons")
+					li
+						i.inline-icon(class=["icon-before-and-after","text-primary","fa","fa-map-marker"])
+						|Located in:
+						br
+						|Riverton, UT 84096, USA
+					li
+						i.inline-icon(class=["icon-before-and-after","text-primary","fa","fa-comment"])
+						a(href="#"): |don.carlynn@gmail.com
+					li
+						i.inline-icon(class=["icon-before-and-after","text-primary","fa","fa-phone"])
+						a(href="#"): |801.231.1678
+				br
+				br
+				p: a.btn(href="#", class="btn-primary"): |Download my CV
+
+				//- Bottom Bar
+				.bottom-bar(class="contact-bottom-bar")
+					.row
+						.col-md-12(class="col-lg-6")
+							h5: |Check my social media!
+
+							//- Social Icons
+							ul.social-icons(class="medium")
+								li: a(href="#"): i.fa(class="fa-facebook")
+								li: a(href="#"): i.fa(class="fa-twitter")
+								li: a(href="#"): i.fa(class="fa-google-plus")
+						.col-md-12(class="col-lg-6")
+							h5: |Like Me on Facebook!
+
+							//- Like Button
+							.fb-like(data-href="https://www.facebook.com/don.payne.5477", data-layout="button_count", data-action="like", data-show-faces="false", data-share="false")
+			
+			//- Contact Form
+			#contact-form-holder.dark
+				.contact-form-trigger(class=["animated","slide-in-right","appear-second"]): i.flaticon-mail21
+				form#contact-form(role="form", method="post")
+					.form-group
+						label: |Name:
+						input#name.form-control(type="text", name="name", placeholder="Enter your name", required)
+					.form-group
+						label: |Email:
+						input#email.form-control(type="email", name="email", placeholder="Enter your email", required)
+					.form-group
+						label: |Message:
+						textarea#message.form-control(rows="3")
+					button.btn(type="submit", class="btn-default")
+						|Submit
+						i.icon-after(class=["fa","fa-chevron-right"])
+
+block scripts
+	script(src="/_components/cookies.js")
+	script(src="/js/jade-runtime.js")
+	script(src="/js/jade-templates.js")
+	script(src="/js/jquery.pubsub.js")
+
+	script(src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js")
+	script(src="https://maps.googleapis.com/maps/api/js")
+	script(src="/js/page-loader.min.js")
+	script(src="/js/jquery.validate.min.js")
+	script(src="/js/jquery.localscroll-1.2.7-min.js")
+	script(src="/js/jquery.scrollTo-1.4.3.1-min.js")
+	script(src="/js/jquery.fitvids.js")
+	script(src="/js/jquery.appear.js")
+	script(src="/js/waypoints.min.js")
+	script(src="/js/owl.carousel.min.js")
+	script(src="/js/jquery.mb.YTPlayer.min.js")
+
+	//- Custom Script
+	script(src="/js/custom.js")
+	script(src="/js/GoogleMap-dark.js")
+
+	//- Video Background
+	script.
+		$("#profile-bg").hide();
+		$(".player").mb_YTPlayer();
+		if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) 
+		{
+			$("#wrapper_mbYTP_profile-bg-player").hide();
+			$("#profile-bg").show();
+		} 
+
+	//- Styleswitcher
+	script(src="/styleswitcher/styleswitcher.js")

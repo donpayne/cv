@@ -1,0 +1,24 @@
+{
+  "name": "public",
+  "version": "0.0.0",
+  "authors": [
+    "dpayne1 <don.payne@imail.org>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "dropzone": "https://github.com/enyo/dropzone.git#~4.0.1",
+    "underscore": "https://github.com/jashkenas/underscore.git#~1.8.3",
+    "jquery": "https://github.com/jquery/jquery.git#~2.1.4",
+    "bootstrap": "https://github.com/twbs/bootstrap.git#~3.3.5",
+    "bootstrap-fileinput": "https://github.com/kartik-v/bootstrap-fileinput.git#~4.2.5",
+    "nouislider": "https://github.com/leongersen/noUiSlider.git#~8.0.2",
+    "components-font-awesome": "https://github.com/components/font-awesome.git#~4.4.0"
+  }
+}

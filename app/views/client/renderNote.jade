@@ -1,0 +1,10 @@
+
+//- Notification Popup
+.note(hidden)
+	.container
+		.jumbotron
+			h2.note-title= title
+			p.note-info= info
+			if (buttons !== undefined)
+				each button in buttons
+					button(id= button.id, type="button", class=["btn","btn-primary"])= button.label
