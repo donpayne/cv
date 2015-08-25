@@ -1,10 +1,11 @@
 
 // Modules
-var express = require('express'),
-	router  = express.Router(),
-	ctrl    = require('../controllers/index.controller');
+var express    = require('express'),
+	router     = express.Router(),
+	controller = require('../controllers/index.controller');
 
-// Homepage
-router.get('/', ctrl.get);
+// Routes
+router.route('/')
+	.get(controller.get);
 
 module.exports = router;
