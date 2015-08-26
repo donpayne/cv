@@ -2,7 +2,7 @@
 // Modules
 var express    = require('express'),
 	router     = express.Router(),
-	controller = require('../controllers/api.skills.controller')();
+	controller = require('../controllers/api.education.controller')();
 
 // Routes
 router.route('/')

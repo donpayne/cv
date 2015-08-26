@@ -8,7 +8,7 @@ var schema = new Schema(
 	'text'               : { type: String },
 	'order'              : { type: Number }
 }, 
-{ collection: 'character' });
+{ collection: 'traits' });
 
 // Expose out model as the module interface
-mongoose.model('Character', schema, 'character');
+mongoose.model('Traits', schema, 'traits');

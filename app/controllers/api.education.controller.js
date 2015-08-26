@@ -6,7 +6,7 @@ var db = require('mongoose');
 module.exports = function (model)
 {
 	// Inject the model to allow for unit testing
-	model = model || db.model('Skills');
+	model = model || db.model('Education');
 
 	return {
 		post : function (req, res)
