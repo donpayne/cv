@@ -1,43 +1,37 @@
 
 // Modules
-var mongoose = require('mongoose'),
-	fs       = require('fs'),
-	q        = require('q'),
-	_        = require('underscore');
+var db = require('mongoose'),
+	q  = require('q'),
+	_  = require('underscore');
 
 // Models
-var db = 
+var models = 
 {
-	Traits      : mongoose.model('Traits'),
-	Specialties : mongoose.model('Specialties'),
-	Languages   : mongoose.model('Languages'),
-	Skills      : mongoose.model('Skills'),
-	Education   : mongoose.model('Education'),
-	Interests   : mongoose.model('Interests')
+	Traits      : db.model('Traits'),
+	Specialties : db.model('Specialties'),
+	Languages   : db.model('Languages'),
+	Skills      : db.model('Skills'),
+	Education   : db.model('Education'),
+	Interests   : db.model('Interests')
 };
 
 module.exports.get = function (req, res, next)
 {
-	var promises = [
-		db.Traits.find({}),
-		db.Specialties.find({}).sort({ order: 1 }),
-		db.Languages.find({}).sort({ order: 1 }),
-		db.Skills.find({}).sort({ order: 1 }),
-		db.Education.find({}).sort({ order: 1 }),
-		db.Interests.find({}).sort({ order: 1 })
-	];
+	var names = _.keys(models);
 
-	q.spread(promises, function (traits, specialties, languages, skills, education, interests)
+	var promises = [];
+	_.each(names, function (name)
 	{
-		var resume =
+		promises.push(models[name].find({}).sort({ order: 1 }));
+	});
+
+	q.allSettled(promises).done(function (results)
+	{
+		var resume = {};
+		_.each(names, function (name, i)
 		{
-			traits      : traits,
-			specialties : specialties,
-			languages   : languages,
-			skills      : skills,
-			education   : education,
-			interests   : interests
-		};
+			resume[name.toLowerCase()] = results[i];
+		})
 
 		res.render('index', { title: 'Don Payne', resume: resume });
 	});

@@ -133,7 +133,7 @@ block content
 							h3: |Who am I?
 							each trait, i in resume.traits
 								p(class="#{(i == 0)? 'lead' : ''}")
-									= trait.text
+									= trait.description
 							a.btn(href="#portfolio", class="btn-black"): |See my portfolio
 							a.btn(href="#contact", class="btn-default"): |Contact me
 						

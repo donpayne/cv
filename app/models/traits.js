@@ -5,7 +5,8 @@ var mongoose = require('mongoose'),
 
 var schema = new Schema(
 {
-	'text'               : { type: String },
+	'title'              : { type: String },
+	'description'        : { type: String },
 	'order'              : { type: Number }
 }, 
 { collection: 'traits' });
