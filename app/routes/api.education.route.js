@@ -2,7 +2,8 @@
 // Modules
 var express    = require('express'),
 	router     = express.Router(),
-	controller = require('../controllers/api.education.controller')();
+	db         = require('mongoose'),
+	controller = require('../controllers/api.resource.controller')(db.model('Education'));
 
 // Routes
 router.route('/')

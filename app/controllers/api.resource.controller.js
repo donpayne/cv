@@ -1,20 +1,16 @@
 
-// Modules
-var db = require('mongoose');
-
 // API Controller
 module.exports = function (model)
 {
-	// Inject the model to allow for unit testing
-	model = model || db.model('Languages');
-
 	return {
 		post : function (req, res)
 		{
 			var doc = new model(req.body);
+
 			doc.save(function (err)
 			{
 				if (err) return res.status(500).send(err);
+				res.status(201);
 				res.json(doc);
 			});
 		},
@@ -23,6 +19,7 @@ module.exports = function (model)
 			model.find({}, function (err, docs)
 			{
 				if (err) return res.status(500).send(err);
+				res.status(200);
 				res.json(docs);
 			});
 		},
@@ -39,13 +36,14 @@ module.exports = function (model)
 				}
 				else
 				{
-					res.status(404).send('Document not found.');
+					res.status(404);
+					res.send('Document not found.');
 				}
 			});
 		},
 		getById : function (req, res)
 		{
-			res.json(req.doc);
+			res.status(200).json(req.doc);
 		},
 		putById : function (req, res)
 		{
@@ -58,6 +56,7 @@ module.exports = function (model)
 			req.doc.save(function (err)
 			{
 				if (err) return res.status(500).send(err);
+				res.status(200);
 				res.json(req.doc);
 			});
 		},
@@ -75,6 +74,7 @@ module.exports = function (model)
 			req.doc.save(function (err)
 			{
 				if (err) return res.status(500).send(err);
+				res.status(200);
 				res.json(req.doc);
 			});
 		},
@@ -83,7 +83,8 @@ module.exports = function (model)
 			req.doc.remove(function (err)
 			{
 				if (err) return res.status(500).send(err);
-				res.status(204).send('Removed.');
+				res.status(204);
+				res.send('Removed.');
 			});
 		}
 	};

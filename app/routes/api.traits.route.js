@@ -2,7 +2,8 @@
 // Modules
 var express    = require('express'),
 	router     = express.Router(),
-	controller = require('../controllers/api.traits.controller')();
+	db         = require('mongoose'),
+	controller = require('../controllers/api.resource.controller')(db.model('Traits'));
 
 // Routes
 router.route('/')

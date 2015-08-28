@@ -2,7 +2,8 @@
 // Modules
 var express    = require('express'),
 	router     = express.Router(),
-	controller = require('../controllers/api.languages.controller')();
+	db         = require('mongoose'),
+	controller = require('../controllers/api.resource.controller')(db.model('Languages'));
 
 // Routes
 router.route('/')
