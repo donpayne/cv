@@ -19,8 +19,19 @@ module.exports = function (model)
 			model.find({}, function (err, docs)
 			{
 				if (err) return res.status(500).send(err);
+
+				// Create links
+				var _docs = [];
+				docs.forEach(function (doc, i)
+				{
+					doc = doc.toJSON();
+					doc.links = {};
+					doc.links.self = 'http://' + req.headers.host + req.baseUrl + '/' + doc._id;
+					_docs.push(doc);
+				});
+
 				res.status(200);
-				res.json(docs);
+				res.json(_docs);
 			});
 		},
 		cacheId : function (req, res, next)
