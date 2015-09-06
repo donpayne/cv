@@ -142,7 +142,7 @@ describe('Skills', function()
 
 	after(function (done)
 	{
-		Model.remove({ title: 'TEST' }).exec();
+		Model.remove({ _id: RESOURCE._id }).exec();
 		done();
 	});
 });
