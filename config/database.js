@@ -1,17 +1,20 @@
 
 // Modules
-var mongoose = require('mongoose');
+var	mongoose = require('mongoose'),
+	fs       = require('fs'),
+	path     = require('path');
 
 // DB Connection
 module.exports = function ()
 {
 	var db = mongoose.connect('mongodb://localhost:27017/cv');
-	require('../app/models/traits');
-	require('../app/models/education');
-	require('../app/models/interests');
-	require('../app/models/languages');
-	require('../app/models/skills');
-	require('../app/models/specialties');
+
+	var folder = './app/models';
+	fs.readdirSync(folder).forEach(function (file)
+	{
+		var resource = '.' + folder + '/' + file.replace(/\.js$/i, '');
+		require(resource);
+	});
 
 	return db;
 };

@@ -297,7 +297,65 @@ block content
 						.post-carousel(class=["animated","slide-in-top"])
 							//- Single Post
 							article.post(class="post-carousel-item")
-								.post-image: img(src="img/blog/post_01.jpg", alt="")
+								.post-image: img(src="img/blog/post_05.png", alt="")
+								.post-content-holder
+									.post-content
+										.post-info(class="clearfix")
+											span.post-date: |3 September, 2015
+											.post-meta
+												span
+													i.fa(class="fa-comment")
+													a(href="#"): |0 comments
+												span
+													i.fa(class="fa-tag")
+													a(href="#"): |Socket.io
+										.post-text
+											h3: a(href="https://github.com/donpayne/tutorials/wiki/Real-Time-Awesomeness", target="_blank"): |Real Time Awesomeness
+											p.lead: |Real Time APIs with Node.js, MongoDB, and Socket.io
+											p: |So I had a thought, "Can't I implement Two-Way Binding on my server like I am on my client".
+											P: |Oh Yeah! In the client I would use Two-Way Binding (in an MVC paradigm) to ensure that any change made in a view would persist to the model, handled by controllers, and sent back to the view to update any other elements that may need to react to those changes.
+											a.btn(href="https://github.com/donpayne/tutorials/wiki/Real-Time-Awesomeness", target="_blank", class=["btn-primary","btn-sm"]): |Read more
+							//- Single Post
+							article.post(class="post-carousel-item")
+								.post-image: img(src="img/blog/post_04.png", alt="")
+								.post-content-holder
+									.post-content
+										.post-info(class="clearfix")
+											span.post-date: |2 September, 2015
+											.post-meta
+												span
+													i.fa(class="fa-comment")
+													a(href="#"): |0 comments
+												span
+													i.fa(class="fa-tag")
+													a(href="#"): |Testing
+										.post-text
+											h3: a(href="https://github.com/donpayne/tutorials/wiki/REST-Integration-Testing-with-SuperTest", target="_blank"): |REST Integration Testing with SuperTest
+											p.lead: |Automation Testing
+											p: |Node web application routes can be tested using the Supertest library.  Supertest can start up a node app, make http requests to routes, and run assertions on http responses.  It can pass parameters to routes and run assertions on things like the response http status code, content type, and execute regular expressions against the response body.
+											a.btn(href="https://github.com/donpayne/tutorials/wiki/REST-Integration-Testing-with-SuperTest", target="_blank", class=["btn-primary","btn-sm"]): |Read more
+							//- Single Post
+							article.post(class="post-carousel-item")
+								.post-image: img(src="img/blog/post_03.png", alt="")
+								.post-content-holder
+									.post-content
+										.post-info(class="clearfix")
+											span.post-date: |1 September, 2015
+											.post-meta
+												span
+													i.fa(class="fa-comment")
+													a(href="#"): |0 comments
+												span
+													i.fa(class="fa-tag")
+													a(href="#"): |Templates
+										.post-text
+											h3: a(href="https://github.com/donpayne/tutorials/wiki/Introduction-to-Jade-Templates", target="_blank"): |Introduction to Jade Templates
+											p.lead: |What is a Template Engine?
+											p: |First let's explain the MVC pattern. MVC stands for Model (data), View (presentation), Controller (logic). The idea is to create a separation of concerns. A template engine focuses on abstracting the responsibility of presenting the view that the user will interact with. It is very important to strictly separate the presentation from the logic!
+											a.btn(href="https://github.com/donpayne/tutorials/wiki/Introduction-to-Jade-Templates", target="_blank", class=["btn-primary","btn-sm"]): |Read more
+							//- Single Post
+							article.post(class="post-carousel-item")
+								.post-image: img(src="img/blog/post_02.png", alt="")
 								.post-content-holder
 									.post-content
 										.post-info(class="clearfix")
@@ -308,9 +366,28 @@ block content
 													a(href="#"): |0 comments
 												span
 													i.fa(class="fa-tag")
+													a(href="#"): |REST
+										.post-text
+											h3: a(href="https://github.com/donpayne/tutorials/wiki/RESTful-Web-Services-with-Node.js-and-Express", target="_blank"): |RESTful Web Services with Node.js and Express
+											p.lead: |What Is REST?
+											p: |REST is the underlying architectural principle of the web. The amazing thing about the web is the fact that clients (browsers) and servers can interact in complex ways without the client knowing anything beforehand about the server and the resources it hosts. The key constraint is that the server and client must both agree on the media used, which in the case of the web is HTML.
+											a.btn(href="https://github.com/donpayne/tutorials/wiki/RESTful-Web-Services-with-Node.js-and-Express", target="_blank", class=["btn-primary","btn-sm"]): |Read more
+							//- Single Post
+							article.post(class="post-carousel-item")
+								.post-image: img(src="img/blog/post_01.png", alt="")
+								.post-content-holder
+									.post-content
+										.post-info(class="clearfix")
+											span.post-date: |30 August, 2015
+											.post-meta
+												span
+													i.fa(class="fa-comment")
+													a(href="#"): |0 comments
+												span
+													i.fa(class="fa-tag")
 													a(href="#"): |SiteLayout
 										.post-text
-											h3: a(href="https://github.com/donpayne/tutorials/wiki/Introduction-to-Building-Website-Layouts"): |Introduction to Building Website Layouts
+											h3: a(href="https://github.com/donpayne/tutorials/wiki/Introduction-to-Building-Website-Layouts", target="_blank"): |Introduction to Building Website Layouts
 											p.lead: |Analyzing Layouts
 											|Many sites have common layout elements.
 											ul
@@ -320,83 +397,7 @@ block content
 												li: |Hero or Featured Content
 												li: |Main Content
 												li: |Footer
-											a.btn(href="https://github.com/donpayne/tutorials/wiki/Introduction-to-Building-Website-Layouts", class=["btn-primary","btn-sm"]): |Read more
-							//- Single Post
-							article.post(class="post-carousel-item")
-								.post-image: img(src="img/blog/post_02.jpg", alt="")
-								.post-content-holder
-									.post-content
-										.post-info(class="clearfix")
-											span.post-date: |22 May, 2014
-											.post-meta
-												span
-													i.fa(class="fa-comment")
-													a(href="#"): |4 comments
-												span
-													i.fa(class="fa-tag")
-													a(href="#"): |Webdesign
-										.post-text
-											h3: a(href="#"): |Brand New PC
-											p.lead: |Per sint eirmod expetenda te. Pro ne essent.
-											p: |Per ea tibique fabellas electram. Ea aliquam corpora vis. Ne quot civibus atomorum quo.
-											a.btn(href="#", class=["btn-primary","btn-sm"]): |Read more
-							//- Single Post
-							article.post(class="post-carousel-item")
-								.post-image: img(src="img/blog/post_03.jpg", alt="")
-								.post-content-holder
-									.post-content
-										.post-info(class="clearfix")
-											span.post-date: |22 May, 2014
-											.post-meta
-												span
-													i.fa(class="fa-comment")
-													a(href="#"): |4 comments
-												span
-													i.fa(class="fa-tag")
-													a(href="#"): |Webdesign
-										.post-text
-											h3: a(href="#"): |To be or not to be?
-											p.lead: |Per sint eirmod expetenda te. Pro ne essent.
-											p: |Per ea tibique fabellas electram. Ea aliquam corpora vis. Ne quot civibus atomorum quo.
-											a.btn(href="#", class=["btn-primary","btn-sm"]): |Read more
-							//- Single Post
-							article.post(class="post-carousel-item")
-								.post-image: img(src="img/blog/post_04.jpg", alt="")
-								.post-content-holder
-									.post-content
-										.post-info(class="clearfix")
-											span.post-date: |22 May, 2014
-											.post-meta
-												span
-													i.fa(class="fa-comment")
-													a(href="#"): |4 comments
-												span
-													i.fa(class="fa-tag")
-													a(href="#"): |Webdesign
-										.post-text
-											h3: a(href="#"): |New Software for my company
-											p.lead: |Per sint eirmod expetenda te. Pro ne essent.
-											p: |Per ea tibique fabellas electram. Ea aliquam corpora vis. Ne quot civibus atomorum quo.
-											a.btn(href="#", class=["btn-primary","btn-sm"]): |Read more
-							//- Single Post
-							article.post(class="post-carousel-item")
-								.post-image: img(src="img/blog/post_05.jpg", alt="")
-								.post-content-holder
-									.post-content
-										.post-info(class="clearfix")
-											span.post-date: |22 May, 2014
-											.post-meta
-												span
-													i.fa(class="fa-comment")
-													a(href="#"): |4 comments
-												span
-													i.fa(class="fa-tag")
-													a(href="#"): |Webdesign
-										.post-text
-											h3: a(href="#"): |Awesome Seattle Cycle Trip
-											p.lead: |Per sint eirmod expetenda te. Pro ne essent.
-											p: |Per ea tibique fabellas electram. Ea aliquam corpora vis. Ne quot civibus atomorum quo.
-											a.btn(href="#", class=["btn-primary","btn-sm"]): |Read more
+											a.btn(href="https://github.com/donpayne/tutorials/wiki/Introduction-to-Building-Website-Layouts", target="_blank", class=["btn-primary","btn-sm"]): |Read more
 							//- Single Post
 							article.post(class="post-carousel-item")
 								.post-image: img(src="img/blog/post_06.jpg", alt="")
