@@ -51,7 +51,7 @@ html(lang="en")
 				if (typeof jQuery === 'undefined')
 				{
 					document.open();
-					document.write('<script src="/js/bower_components/jquery/dist/jquery-1.11.3.min.js">\x3C/script>');
+					document.write('<script src="/bower_components/jquery/dist/jquery-1.11.3.min.js">\x3C/script>');
 					document.close();
 				}
 
@@ -61,7 +61,7 @@ html(lang="en")
 				if (typeof jQuery === 'undefined')
 				{
 					document.open();
-					document.write('<script src="/js/bower_components/jquery/dist/jquery.min.js">\x3C/script>');
+					document.write('<script src="/bower_components/jquery/dist/jquery.min.js">\x3C/script>');
 					document.close();
 				}
 
@@ -70,16 +70,25 @@ html(lang="en")
 			if (typeof $().emulateTransitionEnd !== 'function')
 			{
 				document.open();
-				document.write('<script src="/js/bower_components/bootstrap/dist/js/bootstrap.min.js">\x3C/script>');
+				document.write('<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js">\x3C/script>');
 				document.close();
 			}
 
-		script(src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js")
+		script(src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js")
 		script.
 			if (typeof _ === 'undefined')
 			{
 				document.open();
-				document.write('<script src="/js/bower_components/underscore/underscore-min.js">\x3C/script>');
+				document.write('<script src="/bower_components/lodash/lodash.min.js">\x3C/script>');
+				document.close();
+			}
+
+		script(src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.3/backbone-min.js")
+		script.
+			if (typeof _ === 'undefined')
+			{
+				document.open();
+				document.write('<script src="/bower_components/backbone/backbone-min.js">\x3C/script>');
 				document.close();
 			}
 

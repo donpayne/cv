@@ -31,7 +31,7 @@ module.exports = function ()
 		p.promise.then(function (templates)
 		{
 			console.log('Compiled Jade Templates');
-			fs.writeFileSync('./public/js/jade-templates.js', templates.join('\n\n'));
+			fs.writeFileSync('./public/js/_components/jade-templates.js', templates.join('\n\n'));
 		});
 	};
 

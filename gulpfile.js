@@ -23,7 +23,7 @@ gulp.task('default', function ()
 
 gulp.task('test', function ()
 {
-    env({ vars: { ENV: 'Test'}});
+    env({ vars: { ENV: 'development' } });
     gulp.src('./app/tests/*.js', { read: false })
         .pipe(mocha({ reporter: 'spec' }));
 });

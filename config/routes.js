@@ -6,16 +6,15 @@ var fs   = require('fs'),
 // Routing
 module.exports = function (app)
 {
-	var folder = './app/routes';
-
-	fs.readdir(folder, function (err, files)
+	fs.readdir(global.path.routes, function (err, files)
 	{
 		if (err) return err;
 
 		files.forEach(function (file)
 		{
 			var route    = parseRoute(file);
-			var resource = '.' + folder + '/' + file;
+			var resource = path.join(global.path.routes, file);
+
 			app.use(route, require(resource));
 
 			if (route === '/index')
