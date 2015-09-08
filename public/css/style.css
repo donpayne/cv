@@ -1088,12 +1088,15 @@ ul.social-icons li a:hover i {
     -o-transition: all .6s ease-in-out;
     opacity: .4
 }
-ul.social-icons li a:hover i {
+ul.social-icons li a:hover i.fa {
     transform: rotateY(360deg);
     -moz-transform: rotateY(360deg);
     -webkit-transform: rotateY(360deg);
     -o-transform: rotateY(360deg);
     opacity: 1
+}
+.fa {
+    transform: none;
 }
 .nav-pills,
 .nav-tabs {
