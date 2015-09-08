@@ -10,7 +10,8 @@ var app = app || {};
 	// ---------------
 
 	// Our overall **AppView** is the top-level piece of UI.
-	app.AppView = Backbone.View.extend({
+	app.AppView = Backbone.View.extend(
+	{
 
 		// Instead of generating a new element, bind to the existing skeleton of
 		// the App already present in the HTML.
@@ -33,31 +34,45 @@ var app = app || {};
 			this.responsiveVids();
 			this.tooltipInit();
 			this.popoverInit();
-			this.render();
+			this.resize();
 		},
 
-		// This page is rendered server-side
-		render: function () 
+		render: function ()
 		{
+			// This page is rendered server-side
+		},
+
+		resize: function () 
+		{
+			var _this = this;
+
 			$(window).resize(function () 
 			{
-				this.setSizes();
-				this.checkPhotos();
+				_this.setSizes();
+				_this.checkPhotos();
 			});
 		},
 
 		setSizes: function () 
 		{
-			$('.logo-content').css({'margin-top': '-' + ($('.logo-content').height() / 2) + 'px'});
-			$('#profile').css({'height': ($(window).height()) + 'px'});
-			$('.profile-content').css({'margin-top': '-' + ($('.profile-content').height() / 2) + 'px'});
-			$('.project-info').css({'margin-top': '-' + ($('.project-info').height() / 2) + 'px'});
-			$('#contact, .contact-content').css({'min-height': ($(window).height()) + 'px'});
+			var height    = $(window).height();
+			var $logo     = $('.logo-content');
+			var $profile  = $('#profile');
+			var $pcontent = $('.profile-content');
+			var $pinfo    = $('.project-info');
+			var $contact  = $('#contact, .contact-content');
+
+			$logo.css({'margin-top': '-' + $logo.height() / 2 + 'px'});
+			$profile.css({'height': height + 'px'});
+			$pcontent.css({'margin-top': '-' + $pcontent.height() / 2 + 'px'});
+			$pinfo.css({'margin-top': '-' + $pinfo.height() / 2 + 'px'});
+			$contact.css({'min-height': height + 'px'});
 		},
 
 		navigation: function ()
 		{
-			$('#page-content section').waypoint(function (direction) 
+			var $section = $('#page-content section');
+			$section.waypoint(function (direction) 
 			{
 				if (direction === 'down') 
 				{
@@ -69,9 +84,9 @@ var app = app || {};
 					$(newLink).parent('li').addClass('active');
 				}
 			},
-			{ offset: 1 });
+			{ offset: + 100 });
 			
-			$('#page-content section').waypoint(function (direction) 
+			$section.waypoint(function (direction) 
 			{
 				if (direction === 'up') 
 				{
@@ -86,28 +101,28 @@ var app = app || {};
 			{ 
 				offset: function () 
 				{
-					return -$(this).height() + 1;
+					return -$(this).height() + 100;
 				}
 			});
 		},
 
 		resume: function ()
 		{
-			$('.dimmed-effect .resume-box').mouseenter(function ()
-			{
-				$('.dimmed-effect .resume-box').not(this).each(function () 
+			$('.dimmed-effect .resume-box')
+				.mouseenter(function ()
 				{
-					$(this).addClass('disable');
-				});
-			});
-			
-			$('.dimmed-effect .resume-box').mouseleave(function ()
-			{
-				$('.dimmed-effect .resume-box').each(function () 
+					$('.dimmed-effect .resume-box').not(this).each(function () 
+					{
+						$(this).addClass('disable');
+					});
+				})
+				.mouseleave(function ()
 				{
-					$(this).removeClass('disable');
+					$('.dimmed-effect .resume-box').each(function () 
+					{
+						$(this).removeClass('disable');
+					});
 				});
-			});
 		},
 
 		postCarousel : function ()
@@ -134,13 +149,13 @@ var app = app || {};
 			
 			var owl = $(".owl-carousel").data('owlCarousel');
 			
-			$('.post-carousel-next').click(function () 
+			$('.post-carousel-next').on('click', function () 
 			{
 				owl.next();
 				return false;
 			});
 			
-			$('.post-carousel-prev').click(function () 
+			$('.post-carousel-prev').on('click', function () 
 			{
 				owl.prev();
 				return false;
@@ -173,25 +188,27 @@ var app = app || {};
 
 		portfolio: function ()
 		{
-			var toLoad;
-			
-			function showNewContent () 
+			$('body').on('click', 'ajax-portfolio-link', function () 
 			{
-			   $('.project-content').slideUp(700, function () { $('.project-content').slideDown(700, function () { $.waypoints('refresh') }); });
-			}
-
-			function loadContent () 
-			{　
-			   $('.project-content').on('load', toLoad, showNewContent());
-			}
-			
-			$('.ajax-portfolio-link').on('click', function () 
-			{
-				toLoad = $(this).attr('href');　
-				loadContent();
+				loadContent($(this).attr('href'));
 				$('html, body').animate({scrollTop:$('.project-content').position().top}, 700);
 				return false;
 			});
+
+			function loadContent (href) 
+			{　
+				var $content = $('.project-content');
+				$content.on('load', href, function ()
+				{
+					$content.slideUp(700, function () 
+					{ 
+						$content.slideDown(700, function () 
+						{ 
+							$.waypoints('refresh') 
+						}); 
+					});
+				});
+			}
 		},
 
 		smoothScrolling : function ()
@@ -201,18 +218,21 @@ var app = app || {};
 
 		contact: function ()
 		{
-			$('#contact-form-holder').addClass('form-hidden');
-			$('.contact-form-trigger').on('click', function () 
+			var $holder  = $('#contact-form-holder');
+			var $trigger = $('.contact-form-trigger');
+			$holder.addClass('form-hidden');
+
+			$('body').on('click', '.contact-form-trigger', function () 
 			{
-				if($('#contact-form-holder').hasClass('form-hidden')) 
+				if($holder.hasClass('form-hidden')) 
 				{
-					$('#contact-form-holder').removeClass('form-hidden').addClass('form-visible');
-					$('.contact-form-trigger').addClass('active');
+					$holder.removeClass('form-hidden').addClass('form-visible');
+					$trigger.addClass('active');
 				} 
-				else if($('#contact-form-holder').hasClass('form-visible')) 
+				else if($holder.hasClass('form-visible')) 
 				{
-					$('#contact-form-holder').removeClass('form-visible').addClass('form-hidden');
-					$('.contact-form-trigger').removeClass('active');
+					$holder.removeClass('form-visible').addClass('form-hidden');
+					$trigger.removeClass('active');
 				};
 			});
 
@@ -258,24 +278,24 @@ var app = app || {};
 			// Send the email
 			$contactForm.submit(function ()
 			{
-				var $success = '<strong>Success!</strong> Your message was sent.';
-				var $error   = '<strong>Error!</strong> Your message was not sent - try again later...';
+				var success = '<strong>Success!</strong> Your message was sent.';
+				var error   = '<strong>Error!</strong> Your message was not sent - try again later...';
 				var response;
 				if ($contactForm.valid())
 				{
 					$.ajax(
 					{
-						type: "POST",
-						url: "php/contact-form.php",
-						data: $(this).serialize(),
+						type : 'POST',
+						url  : 'php/contact-form.php',
+						data : $(this).serialize(),
 						success: function (msg) 
 						{
 							if (msg === 'SEND')
-								response = '<div class="alert alert-success">'+ $success +'</div>';
+								response = '<div class="alert alert-success">' + success + '</div>';
 							else
-								response = '<div class="alert alert-warning">'+ $error +'</div>';
+								response = '<div class="alert alert-warning">' + error + '</div>';
 
-							$(".alert-error,.alert-success").remove();
+							$('.alert-error, .alert-success').remove();
 							$contactForm.prepend(response);
 						}
 					 });

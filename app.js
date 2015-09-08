@@ -30,7 +30,7 @@ global.path    =
     'models'        : path.join(global.root, 'app', 'models'),
     'routes'        : path.join(global.root, 'app', 'routes'),
     'views'         : path.join(global.root, 'app', 'views'),
-    'jade-compiler' : path.join(global.root, 'app', 'jade-compiler'),
+    'compiler'      : path.join(global.root, 'app', 'jade-compiler'),
     'public'        : path.join(global.root, 'public'),
     'bower'         : path.join(global.root, 'bower_components')
 };
@@ -69,7 +69,7 @@ if (app.get('env') === 'development')
 	});
 
 	// Compile Clientside Jade Templates
-	require(global.path['jade-compiler'])();
+	require(global.path.compiler)(path.join(global.path.views, 'client'));
 }
 
 // production error handler
