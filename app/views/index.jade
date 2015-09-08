@@ -5,7 +5,7 @@ block styles
 	link(rel="stylesheet" href="/css/flaticon.css")
 	link(rel="stylesheet" href="/css/owl.carousel.css")
 	link(rel="stylesheet" href="/css/owl.theme.css")
-	link(rel="stylesheet" href="/css/style.min.css")
+	link(rel="stylesheet" href="/css/style.css")
 	link(rel="stylesheet" href="/colors/blue.css" id="colors")
 
 block content
@@ -313,7 +313,6 @@ block content
 											h3: a(href="https://github.com/donpayne/tutorials/wiki/Real-Time-Awesomeness", target="_blank"): |Real Time Awesomeness
 											p.lead: |Real Time APIs with Node.js, MongoDB, and Socket.io
 											p: |So I had a thought, "Can't I implement Two-Way Binding on my server like I am on my client".
-											P: |Oh Yeah! In the client I would use Two-Way Binding (in an MVC paradigm) to ensure that any change made in a view would persist to the model, handled by controllers, and sent back to the view to update any other elements that may need to react to those changes.
 											a.btn(href="https://github.com/donpayne/tutorials/wiki/Real-Time-Awesomeness", target="_blank", class=["btn-primary","btn-sm"]): |Read more
 							//- Single Post
 							article.post(class="post-carousel-item")
@@ -330,10 +329,10 @@ block content
 													i.fa(class="fa-tag")
 													a(href="#"): |Testing
 										.post-text
-											h3: a(href="https://github.com/donpayne/tutorials/wiki/REST-Integration-Testing-with-SuperTest", target="_blank"): |REST Integration Testing with SuperTest
-											p.lead: |Automation Testing
-											p: |Node web application routes can be tested using the Supertest library.  Supertest can start up a node app, make http requests to routes, and run assertions on http responses.  It can pass parameters to routes and run assertions on things like the response http status code, content type, and execute regular expressions against the response body.
-											a.btn(href="https://github.com/donpayne/tutorials/wiki/REST-Integration-Testing-with-SuperTest", target="_blank", class=["btn-primary","btn-sm"]): |Read more
+											h3: a(href="https://github.com/donpayne/tutorials/wiki/Integration-Testing-with-SuperTest", target="_blank"): |Integration Testing with SuperTest
+											p.lead: |Automation or Bust
+											p: |Node web application routes can be tested using the Supertest library.  Supertest can start up a node app, make http requests to routes, and run assertions on http responses.
+											a.btn(href="https://github.com/donpayne/tutorials/wiki/Integration-Testing-with-SuperTest", target="_blank", class=["btn-primary","btn-sm"]): |Read more
 							//- Single Post
 							article.post(class="post-carousel-item")
 								.post-image: img(src="img/blog/post_03.png", alt="")
@@ -351,7 +350,7 @@ block content
 										.post-text
 											h3: a(href="https://github.com/donpayne/tutorials/wiki/Introduction-to-Jade-Templates", target="_blank"): |Introduction to Jade Templates
 											p.lead: |What is a Template Engine?
-											p: |First let's explain the MVC pattern. MVC stands for Model (data), View (presentation), Controller (logic). The idea is to create a separation of concerns. A template engine focuses on abstracting the responsibility of presenting the view that the user will interact with. It is very important to strictly separate the presentation from the logic!
+											p: |First let's explain the MVC pattern. MVC stands for Model (data), View (presentation), Controller (logic). The idea is to create a separation of concerns. A template engine focuses on abstracting the responsibility of presenting the view that the user will interact with.
 											a.btn(href="https://github.com/donpayne/tutorials/wiki/Introduction-to-Jade-Templates", target="_blank", class=["btn-primary","btn-sm"]): |Read more
 							//- Single Post
 							article.post(class="post-carousel-item")
@@ -368,10 +367,10 @@ block content
 													i.fa(class="fa-tag")
 													a(href="#"): |REST
 										.post-text
-											h3: a(href="https://github.com/donpayne/tutorials/wiki/RESTful-Web-Services-with-Node.js-and-Express", target="_blank"): |RESTful Web Services with Node.js and Express
+											h3: a(href="https://github.com/donpayne/tutorials/wiki/REST-APIs-with-Node.js-and-Express", target="_blank"): |REST APIs with Node.js and Express
 											p.lead: |What Is REST?
-											p: |REST is the underlying architectural principle of the web. The amazing thing about the web is the fact that clients (browsers) and servers can interact in complex ways without the client knowing anything beforehand about the server and the resources it hosts. The key constraint is that the server and client must both agree on the media used, which in the case of the web is HTML.
-											a.btn(href="https://github.com/donpayne/tutorials/wiki/RESTful-Web-Services-with-Node.js-and-Express", target="_blank", class=["btn-primary","btn-sm"]): |Read more
+											p: |REST is the underlying architectural principle of the web. The amazing thing about the web is the fact that clients (browsers) and servers can interact in complex ways without the client knowing anything beforehand about the server and the resources it hosts.
+											a.btn(href="https://github.com/donpayne/tutorials/wiki/REST-APIs-with-Node.js-and-Express", target="_blank", class=["btn-primary","btn-sm"]): |Read more
 							//- Single Post
 							article.post(class="post-carousel-item")
 								.post-image: img(src="img/blog/post_01.png", alt="")
@@ -520,6 +519,7 @@ block scripts
 
 	script(src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js")
 	script(src="https://maps.googleapis.com/maps/api/js")
+	script(src="/js/_components/GoogleMap-dark.js")
 	script(src="/js/_components/page-loader.min.js")
 	script(src="/js/_components/jquery.validate.min.js")
 	script(src="/js/_components/jquery.localscroll-1.2.7-min.js")
@@ -531,8 +531,8 @@ block scripts
 	script(src="/js/_components/jquery.mb.YTPlayer.min.js")
 
 	//- Custom Script
-	script(src="/js/_components/custom.js")
-	script(src="/js/_components/GoogleMap-dark.js")
+	script(src="/js/views/app.view.js")
+	script(src="/js/app.js")
 
 	//- Video Background
 	script.

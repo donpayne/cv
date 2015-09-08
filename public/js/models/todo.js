@@ -2,7 +2,8 @@
 // Backbone
 var app = app || {};
 
-(function () {
+(function () 
+{
 	'use strict';
 
 	// Todo Model

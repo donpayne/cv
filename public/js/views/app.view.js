@@ -2,7 +2,8 @@
 // Backbone
 var app = app || {};
 
-(function ($) {
+(function ($) 
+{
 	'use strict';
 
 	// The Application
@@ -13,120 +14,375 @@ var app = app || {};
 
 		// Instead of generating a new element, bind to the existing skeleton of
 		// the App already present in the HTML.
-		el: '.todoapp',
+		el: '#page-content',
 
-		// Our template for the line of statistics at the bottom of the app.
-		statsTemplate: _.template($('#stats-template').html()),
-
-		// Delegated events for creating new items, and clearing completed ones.
-		events: {
-			'keypress .new-todo': 'createOnEnter',
-			'click .clear-completed': 'clearCompleted',
-			'click .toggle-all': 'toggleAllComplete'
+		// Initialization
+		initialize: function () 
+		{
+			this.setSizes();
+			this.navigation();
+			this.resume();
+			this.postCarousel();
+			this.blogSlider();
+			this.portfolio();
+			this.smoothScrolling();
+			this.contact();
+			this.animations();
+			this.alpha();
+			this.checkPhotos();
+			this.responsiveVids();
+			this.tooltipInit();
+			this.popoverInit();
+			this.render();
 		},
 
-		// At initialization we bind to the relevant events on the `Todos`
-		// collection, when items are added or changed. Kick things off by
-		// loading any preexisting todos that might be saved in *localStorage*.
-		initialize: function () {
-			this.allCheckbox = this.$('.toggle-all')[0];
-			this.$input = this.$('.new-todo');
-			this.$footer = this.$('.footer');
-			this.$main = this.$('.main');
-			this.$list = $('.todo-list');
-
-			this.listenTo(app.todos, 'add', this.addOne);
-			this.listenTo(app.todos, 'reset', this.addAll);
-			this.listenTo(app.todos, 'change:completed', this.filterOne);
-			this.listenTo(app.todos, 'filter', this.filterAll);
-			this.listenTo(app.todos, 'all', _.debounce(this.render, 0));
-
-			// Suppresses 'add' events with {reset: true} and prevents the app view
-			// from being re-rendered for every model. Only renders when the 'reset'
-			// event is triggered at the end of the fetch.
-			app.todos.fetch({reset: true});
+		// This page is rendered server-side
+		render: function () 
+		{
+			$(window).resize(function () 
+			{
+				this.setSizes();
+				this.checkPhotos();
+			});
 		},
 
-		// Re-rendering the App just means refreshing the statistics -- the rest
-		// of the app doesn't change.
-		render: function () {
-			var completed = app.todos.completed().length;
-			var remaining = app.todos.remaining().length;
-
-			if (app.todos.length) {
-				this.$main.show();
-				this.$footer.show();
-
-				this.$footer.html(this.statsTemplate({
-					completed: completed,
-					remaining: remaining
-				}));
-
-				this.$('.filters li a')
-					.removeClass('selected')
-					.filter('[href="#/' + (app.TodoFilter || '') + '"]')
-					.addClass('selected');
-			} else {
-				this.$main.hide();
-				this.$footer.hide();
-			}
-
-			this.allCheckbox.checked = !remaining;
+		setSizes: function () 
+		{
+			$('.logo-content').css({'margin-top': '-' + ($('.logo-content').height() / 2) + 'px'});
+			$('#profile').css({'height': ($(window).height()) + 'px'});
+			$('.profile-content').css({'margin-top': '-' + ($('.profile-content').height() / 2) + 'px'});
+			$('.project-info').css({'margin-top': '-' + ($('.project-info').height() / 2) + 'px'});
+			$('#contact, .contact-content').css({'min-height': ($(window).height()) + 'px'});
 		},
 
-		// Add a single todo item to the list by creating a view for it, and
-		// appending its element to the `<ul>`.
-		addOne: function (todo) {
-			var view = new app.TodoView({ model: todo });
-			this.$list.append(view.render().el);
+		navigation: function ()
+		{
+			$('#page-content section').waypoint(function (direction) 
+			{
+				if (direction === 'down') 
+				{
+					var menuLink    = $('.me-nav li').children('a').attr('href');
+					var activeLink  = $('.me-nav li.active');
+					var newLink     = $('li.menu-item a[href="#' + $(this).attr('id') + '"]');
+
+					$(activeLink).removeClass('active');
+					$(newLink).parent('li').addClass('active');
+				}
+			},
+			{ offset: 1 });
+			
+			$('#page-content section').waypoint(function (direction) 
+			{
+				if (direction === 'up') 
+				{
+					var menuLink    = $('.me-nav li').children('a').attr('href');
+					var activeLink  = $('.me-nav li.active');
+					var newLink     = $('li.menu-item a[href="#' + $(this).attr('id') + '"]');
+
+					$(activeLink).removeClass('active');
+					$(newLink).parent('li').addClass('active');
+				}
+			},
+			{ 
+				offset: function () 
+				{
+					return -$(this).height() + 1;
+				}
+			});
 		},
 
-		// Add all items in the **Todos** collection at once.
-		addAll: function () {
-			this.$list.html('');
-			app.todos.each(this.addOne, this);
-		},
-
-		filterOne: function (todo) {
-			todo.trigger('visible');
-		},
-
-		filterAll: function () {
-			app.todos.each(this.filterOne, this);
-		},
-
-		// Generate the attributes for a new Todo item.
-		newAttributes: function () {
-			return {
-				title: this.$input.val().trim(),
-				order: app.todos.nextOrder(),
-				completed: false
-			};
-		},
-
-		// If you hit return in the main input field, create new **Todo** model,
-		// persisting it to *localStorage*.
-		createOnEnter: function (e) {
-			if (e.which === ENTER_KEY && this.$input.val().trim()) {
-				app.todos.create(this.newAttributes());
-				this.$input.val('');
-			}
-		},
-
-		// Clear all completed todo items, destroying their models.
-		clearCompleted: function () {
-			_.invoke(app.todos.completed(), 'destroy');
-			return false;
-		},
-
-		toggleAllComplete: function () {
-			var completed = this.allCheckbox.checked;
-
-			app.todos.each(function (todo) {
-				todo.save({
-					completed: completed
+		resume: function ()
+		{
+			$('.dimmed-effect .resume-box').mouseenter(function ()
+			{
+				$('.dimmed-effect .resume-box').not(this).each(function () 
+				{
+					$(this).addClass('disable');
 				});
 			});
+			
+			$('.dimmed-effect .resume-box').mouseleave(function ()
+			{
+				$('.dimmed-effect .resume-box').each(function () 
+				{
+					$(this).removeClass('disable');
+				});
+			});
+		},
+
+		postCarousel : function ()
+		{
+			$(".post-carousel").owlCarousel(
+			{
+				// Most important owl features
+				items : false,
+				itemsCustom : [[1600,3],[991,2],[0,1]],
+				itemsDesktop : false,
+				itemsDesktopSmall : false,
+				itemsTabletSmall: false,
+				itemsMobile : false,
+				singleItem : false,
+				itemsScaleUp : false,
+				slideSpeed : 600,
+				paginationSpeed : 800,
+				rewindSpeed : 1000,
+				navigation : false,
+				scrollPerPage : true,
+				pagination : true,
+				theme : "carousel-theme"
+			});
+			
+			var owl = $(".owl-carousel").data('owlCarousel');
+			
+			$('.post-carousel-next').click(function () 
+			{
+				owl.next();
+				return false;
+			});
+			
+			$('.post-carousel-prev').click(function () 
+			{
+				owl.prev();
+				return false;
+			});
+		},
+
+		blogSlider : function ()
+		{
+			$(".blog-slider").owlCarousel(
+			{
+				// Most important owl features
+				items : false,
+				itemsCustom : false,
+				itemsDesktop : false,
+				itemsDesktopSmall : false,
+				itemsTabletSmall: false,
+				itemsMobile : false,
+				singleItem : true,
+				itemsScaleUp : false,
+				slideSpeed : 600,
+				paginationSpeed : 800,
+				rewindSpeed : 1000,
+				navigation : false,
+				scrollPerPage : true,
+				pagination : true,
+				autoPlay: true,
+				theme : "slider-theme"
+			});
+		},
+
+		portfolio: function ()
+		{
+			var toLoad;
+			
+			function showNewContent () 
+			{
+			   $('.project-content').slideUp(700, function () { $('.project-content').slideDown(700, function () { $.waypoints('refresh') }); });
+			}
+
+			function loadContent () 
+			{　
+			   $('.project-content').on('load', toLoad, showNewContent());
+			}
+			
+			$('.ajax-portfolio-link').on('click', function () 
+			{
+				toLoad = $(this).attr('href');　
+				loadContent();
+				$('html, body').animate({scrollTop:$('.project-content').position().top}, 700);
+				return false;
+			});
+		},
+
+		smoothScrolling : function ()
+		{
+			$.localScroll({});
+		},
+
+		contact: function ()
+		{
+			$('#contact-form-holder').addClass('form-hidden');
+			$('.contact-form-trigger').on('click', function () 
+			{
+				if($('#contact-form-holder').hasClass('form-hidden')) 
+				{
+					$('#contact-form-holder').removeClass('form-hidden').addClass('form-visible');
+					$('.contact-form-trigger').addClass('active');
+				} 
+				else if($('#contact-form-holder').hasClass('form-visible')) 
+				{
+					$('#contact-form-holder').removeClass('form-visible').addClass('form-hidden');
+					$('.contact-form-trigger').removeClass('active');
+				};
+			});
+
+			var $contactForm  = $('#contact-form');
+
+			$contactForm.validate(
+			{
+				rules: 
+				{
+					name: 
+					{
+						required    : true,
+						minlength   : 1
+					},
+					email: 
+					{
+						required    : true,
+						email       : true
+					},
+					message: 
+					{
+						required    : true,
+						minlength   : 10
+					}
+				},
+				messages: 
+				{
+					name: 
+					{
+						required    : "Please enter your name."
+					},
+					email: 
+					{
+						required    : "Please enter your email address."
+					},
+					message: 
+					{
+						required    : "Please enter a message."
+					}
+				}
+			});
+
+			// Send the email
+			$contactForm.submit(function ()
+			{
+				var $success = '<strong>Success!</strong> Your message was sent.';
+				var $error   = '<strong>Error!</strong> Your message was not sent - try again later...';
+				var response;
+				if ($contactForm.valid())
+				{
+					$.ajax(
+					{
+						type: "POST",
+						url: "php/contact-form.php",
+						data: $(this).serialize(),
+						success: function (msg) 
+						{
+							if (msg === 'SEND')
+								response = '<div class="alert alert-success">'+ $success +'</div>';
+							else
+								response = '<div class="alert alert-warning">'+ $error +'</div>';
+
+							$(".alert-error,.alert-success").remove();
+							$contactForm.prepend(response);
+						}
+					 });
+					return false;
+				}
+				return false;
+			});
+		},
+
+		animations: function ()
+		{
+			$('.animated').appear();
+
+			$('.fade-in').appear(function () 
+			{
+				$(this).each(function () { $(this).addClass('fade-in-animation') });
+			});
+			
+			$('.fade-in-left').appear(function () 
+			{
+				$(this).each(function () { $(this).addClass('fade-in-left-animation') });
+			});
+			
+			$('.fade-in-right').appear(function () 
+			{
+				$(this).each(function () { $(this).addClass('fade-in-right-animation') });
+			});
+			
+			$('.slide-in-left').appear(function () 
+			{
+				$(this).each(function () { $(this).addClass('slide-in-left-animation') });
+			});
+			
+			$('.slide-in-right').appear(function () 
+			{
+				$(this).each(function () { $(this).addClass('slide-in-right-animation') });
+			});
+			
+			$('.slide-in-top').appear(function () 
+			{
+				$(this).each(function () { $(this).addClass('slide-in-top-animation') });
+			});
+			
+			$('.slide-in-bottom').appear(function () 
+			{
+				$(this).each(function () { $(this).addClass('slide-in-bottom-animation') });
+			});
+			
+			$('.zoom-in').appear(function () 
+			{
+				$(this).each(function () { $(this).addClass('zoom-in-animation') });
+			});
+			
+			$('.zoom-out').appear(function () 
+			{
+				$(this).each(function () { $(this).addClass('zoom-out-animation') });
+			});
+			
+			$('.bounce-in').appear(function () 
+			{
+				$(this).each(function () { $(this).addClass('bounce-in-animation') });
+			});
+			 
+			$('.flip-in').appear(function () 
+			{
+				$(this).each(function () { $(this).addClass('flip-in-animation') });
+			});
+		},
+
+		alpha: function ()
+		{
+			$('.editable-alpha').css(
+			{
+				'opacity': ($('.editable-alpha').attr('data-alpha') / 100)
+			});
+		},
+
+		checkPhotos: function () 
+		{
+			var $imgs = $('#profile-bg img, .page-title-bg img, .blog-slide-photo img');
+
+			if ($imgs.height() < $imgs.parent().height()) 
+			{
+				$imgs.removeClass('too-slim');
+				$imgs.addClass('too-short');
+			}
+			if ($imgs.width() < $imgs.parent().width())  
+			{
+				$imgs.removeClass('too-short');
+				$imgs.addClass('too-slim');
+			}
+		},
+
+		responsiveVids: function ()
+		{
+			$('body').fitVids();
+		},
+
+		tooltipInit: function ()
+		{
+			$("[rel='tooltip']").tooltip();
+		},
+
+		popoverInit: function () 
+		{
+			$("[rel='popover']").popover();
 		}
 	});
+
 })(jQuery);
