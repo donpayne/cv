@@ -37,7 +37,7 @@ global.path    =
 
 // Application
 var app = express();
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 8080);
 app.set('view engine', 'jade');
 app.set('views', global.path.views);
 app.use(favicon(path.join(global.path.public, 'img', 'favicon.ico')));
